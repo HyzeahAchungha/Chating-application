@@ -6,25 +6,30 @@ import { GrCirclePlay } from "react-icons/gr"
 import { GrLocation } from "react-icons/gr"
 import { GrFormSchedule } from "react-icons/gr"
 import { FaTimesCircle } from "react-icons/fa"
-
+import {useSelector} from 'react-redux'
 
 
 
 
 const PostShare = () => {
+  const {user}=useSelector((state)=>state.authReducer.authData)
+
   const [image, setImage] = useState(null)
   const imageRef = useRef()
   const onImageChangge = (e) => {
     if (e.target.files && e.target.files[0]) {
       let img = e.target.files[0]
 
-      setImage(
-        {
-          image: URL.createObjectURL(img)
-
-        }
-      )
+      setImage(img )
     }
+  }
+
+  const handleSubmit=(e)=>{
+e.preventDefualt()
+const newPost={
+  userId:user._id,
+
+}
   }
   return (
     <div className='PostShare'>
@@ -64,7 +69,9 @@ const PostShare = () => {
             <GrFormSchedule />
             Schedule
           </div>
-          <button className='button ps-button'>
+          <button className='button ps-button'
+          onClick={handleSubmit}
+          >
             Share
           </button>
           <div style={{ display: "none" }}>
@@ -73,7 +80,7 @@ const PostShare = () => {
         </div>
         {image && (
           <div className="previewImage">
-            <img src={image.image} alt="" />
+            <img src={URL.createObjectURL(image)} alt="" />
             <FaTimesCircle onClick={() => setImage(null)}
             />
           </div>
