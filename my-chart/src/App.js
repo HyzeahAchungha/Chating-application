@@ -5,6 +5,7 @@ import Auth from './pages/Auth/Auth';
 import Home from './pages/home/Home';
 import Profile from './pages/home/Profile/Profile';
 import { Routes, Route, Navigate } from 'react-router-dom'
+import Chat from './pages/Chat/Chat';
 
 
 function App() {
@@ -27,15 +28,17 @@ function App() {
           path="/auth"
           element={user ? <Navigate to="../home" /> : <Auth />}
         />
-        {/* <Route
+        <Route
           path="/profile/:id"
           element={user ? <Profile /> : <Navigate to="../auth" />}
-        /> */}
+        />
+        <Route path='/chat' element={user?<Chat/>:<Navigate to="../auth"/>} />
       </Routes>
-      {/* <Home/> */}
-      {/* <Profile/> */}
 
-
+      
+      dowload them
+      {/* "framer-motion": "^6.2.8", */}
+      {/* "swiper": "^8.0.7", */}
 
       {/* {serverList.map((server, index) => {
                         return (

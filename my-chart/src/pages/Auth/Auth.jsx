@@ -12,7 +12,7 @@ const Auth = () => {
     const [isSignUp, setIsSignUp] = useState(true)
     const [data, setData] = useState({
         firstname: "",
-        lasttname: "",
+        lastname: "",
         password: "",
         Confirmpass: "",
         username: ""
@@ -38,7 +38,7 @@ const Auth = () => {
         setConfirmPass(true)
         setData({
             firstname: "",
-            lasttname: "",
+            lastname: "",
             password: "",
             Confirmpass: "",
             username: ""
@@ -83,9 +83,9 @@ const Auth = () => {
                             />
 
                             <input type="text" placeholder='Last Name'
-                                className='infoInput' name="lasttname"
+                                className='infoInput' name="lastname"
                                 onChange={handelChange}
-                                value={data.lasttname}
+                                value={data.lastname}
                             />
 
                         </div>
