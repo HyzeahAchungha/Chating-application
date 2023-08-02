@@ -18,7 +18,6 @@ const app = express()
 app.use(express.static('public'))
 app.use('/images', express.static("images"))
 
-
 //middleware
 app.use(cors());
 app.use(express.json());
@@ -39,6 +38,9 @@ mongoose.connect(process.env.MONGO_DB,
 	.then(() => app.listen(process.env.PORT, () => console.log(`server is runing on ${process.env.PORT}`)))
 	.catch((error) => console.log(error))
 
+
+
+	
 //usage of routes
 app.use('/auth', AuthRoute)
 app.use("/user", UserRoute)

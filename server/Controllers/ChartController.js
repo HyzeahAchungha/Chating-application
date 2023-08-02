@@ -1,15 +1,5 @@
 import ChatModel from "../Models/ChartModel.js"
 
-// export const createChat = async (req, res) => {
-//     const newChat = new ChatModel({
-//         members: [req.body.senderId, req.body.receiverId]
-//     })
-//     try {
-//         res.status(200).json(newChat)
-//     } catch (error) {
-//         res.status(500).json(error)
-//     }
-// }
 
 export const createChat = async (req, res) => {
     const newChat = new ChatModel({

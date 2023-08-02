@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react'
-import Prop from "../images/prop.png"
 import "./PostShare.css"
 import { FcAddImage } from "react-icons/fc"
 import { GrCirclePlay } from "react-icons/gr"
@@ -28,14 +27,14 @@ const PostShare = () => {
 
 
 
-  const reset = (e) => {
+  const reset = () => {
     setImage(null)
-e.preventDefault(e)
+// e.preventDefault(e)
     desc.current.value = ""
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault(e)
     const newPost = {
       userId: user._id,
       desc: desc.current.value
@@ -58,6 +57,7 @@ e.preventDefault(e)
     dispatch(uploadPost(newPost))
     reset()
   }
+  
   return (
     <div className='PostShare'>
       <img src={user.coverPicture? serverPublic + user.profilePicture : serverPublic + "defaultProfile.png"} alt="" />

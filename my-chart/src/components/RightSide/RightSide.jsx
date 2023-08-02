@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "./RightSide.css"
-import { IoIosNotificationsOff } from "react-icons/io"
-import { FaRegComments } from "react-icons/fa"
+import pinkMessages from '../images/pink.png'
+import notification from "../images/noti.png"
 import { AiFillSetting } from "react-icons/ai"
 import TrendCard from '../TrendCard/TrendCard'
 import ShareModal from "../ShareModal/ShareModal"
@@ -14,11 +14,14 @@ const RightSide = () => {
         <div className='RightSide'>
             <div className="navIcons">
                 <Link to='../home'>
-                <img src={Home} alt="" />
+                    <img src={Home} alt="" />
                 </Link>
 
-                <IoIosNotificationsOff />
-                <FaRegComments />
+                <Link to='../chat'>
+                    <img src={pinkMessages} alt="" width={"50%"} />
+                </Link>
+
+                <img src={notification} alt="" width={"50%"} />
                 <AiFillSetting />
             </div>
             <TrendCard />

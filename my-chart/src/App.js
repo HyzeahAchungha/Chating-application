@@ -36,7 +36,7 @@ function App() {
       </Routes>
 
       
-      dowload them
+     {/* // dowload them// */}
       {/* "framer-motion": "^6.2.8", */}
       {/* "swiper": "^8.0.7", */}
 

@@ -6,7 +6,7 @@ import "./LogoSearch.css"
 const LogoSearch = () => {
   return (
 <div className="LogoSearch">
-<img src={Logo} alt="" width={"5%"} />
+<img src={Logo} alt="" width={"13%"} />
 <div className="Search">
     <input type="text" placeholder='#Explore'/>
     <div className="s-icon">
