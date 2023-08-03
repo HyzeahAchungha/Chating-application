@@ -19,31 +19,39 @@ const Chat = () => {
 
   const [chats, setChats] = useState([])
   const [currentChat, setCurrentChat] = useState(null)
-  const [onlineUsers, setOnlineUsers]=useState([])
+  const [onlineUsers, setOnlineUsers] = useState([])
   const [sendMessage, setSendMessage] = useState(null)
+  const [receiveMessage, setReceiveMessage] = useState(null)
+
   const socket = useRef()
 
 
+  //send message to the socket server
+  useEffect(() => {
+    if (sendMessage !== null) {
+      socket.current.emit('send-message', sendMessage)
+    }
+  }, [sendMessage])
 
-useEffect(()=>{
-if (sendMessage!==null) {
-  socket.current.emit('send-message', sendMessage)
-}
-},[sendMessage])
 
-
-
+  //receive messages to the socket server
 
   useEffect(() => {
     socket.current = io('http://localhost:8800')
-    socket.current.emit("new-user-add",user._id)
-    socket.current.on('get-users',(users)=>{
+    socket.current.emit("new-user-add", user._id)
+    socket.current.on('get-users', (users) => {
       setOnlineUsers(users)
-      
+
     })
   }, [user])
 
 
+  useEffect(() => {
+    socket.current.on("receive-message", (data) => {
+      setReceiveMessage(data)
+    })
+
+  }, [])
 
   useEffect(() => {
     const getChats = async () => {
@@ -59,6 +67,12 @@ if (sendMessage!==null) {
     }
     getChats()
   }, [user])
+
+  const checkOnlineStatus = (chat) => {
+    const chatMember = chat.members.find((member) => member !== user._id);
+    const online = onlineUsers.find((user) => user.userId === chatMember);
+    return online ? true : false;
+  };
 
   return (
     <div className="Chat">
@@ -76,7 +90,7 @@ if (sendMessage!==null) {
             {chats.map((chat) => (
 
               <div onClick={() => setCurrentChat(chat)}>
-                <Conversation data={chat} currentUserId={user._id} />
+                <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)} />
 
               </div>
 
@@ -108,7 +122,7 @@ if (sendMessage!==null) {
 
           {/* {chat body}  */}
 
-          <ChatBox chat={currentChat} currentUser={user._id}  setSendMessage= {setSendMessage}/>
+          <ChatBox chat={currentChat} currentUser={user._id} setSendMessage={setSendMessage} receiveMessage={receiveMessage} />
         </div>
       </div>
     </div>

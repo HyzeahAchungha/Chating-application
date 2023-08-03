@@ -1,9 +1,11 @@
 .ChatBox-container {
     background: var(--cardColor);
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     display: grid;
     grid-template-rows: 14vh 60vh 13vh;
 }
+
+
 
 .chat-header {
     padding: 1rem 1rem 0rem 1rem;
@@ -85,6 +87,6 @@
     cursor: pointer
 }
 .chat-sender>div{
-    height: 70%;
-    padding: 0px 15px 0px 15px;
+    height: 50%;
+    padding: 0px 8px 0px 8px;
 }

@@ -21,6 +21,7 @@
     height: auto;
     min-height: 80vh;
     overflow: scroll;
+    
   }
 
   
@@ -59,15 +60,13 @@
     height: 1rem;
   }
   
-  
-  .Chat-sender>div{
-    height: 70%;
-    padding: 0px 15px 0px 15px;
-  }
+
+
   @media screen and (max-width: 768px) {
    .Chat {
       grid-template-columns: 16% auto;
     }
+
      .follower.conversation>div>.name{
       display: none;
      }

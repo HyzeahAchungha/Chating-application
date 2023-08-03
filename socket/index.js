@@ -1,6 +1,11 @@
+
+
+
 const io = require('socket.io')(8800, {
     cors: {
         origin: "http://localhost:3000"
+        
+
     }
 })
 
@@ -22,6 +27,19 @@ io.on("connection", (socket) => {
         console.log("Connected Users", activeUsers);
         io.emit('get-users', activeUsers)
     })
+
+//send messages
+socket.on("send-message", (data)=>{
+    const {receiverId}=data;
+    const user = activeUsers.find((user)=>user.userId===receiverId)
+    console.log("Sending from socket to: ", receiverId);
+    console.log("Data",data);
+    if (user) {
+        io.to(user.socketId).emit("receive-message",data)
+        
+    }
+})
+
     socket.on("disconnected", () => {
         activeUsers = activeUsers.filter((user) => user.socketId !== socket.id)
         console.log("User Disconnected", activeUsers);

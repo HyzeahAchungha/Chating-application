@@ -4,12 +4,22 @@ import { addMessage, getMessages } from '../../Api/MessageRequest'
 import "./ChatBox.css"
 import { format } from 'timeago.js'
 import InputEmoji, { async } from "react-input-emoji";
+import { useRef } from 'react'
 
 
-const ChatBox = ({ chat, currentUser,setSendMessage }) => {
+const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
   const [userData, setUserData] = useState(null)
   const [messages, setMessages] = useState([])
   const [newMessage, setNewMessage] = useState('')
+  const scroll = useRef()
+
+
+  useEffect(() => {
+    if (receiveMessage !== null && receiveMessage.chatId === chat._id) {
+      setMessages([...messages, receiveMessage])
+    }
+
+  }, [receiveMessage])
 
 
 
@@ -28,6 +38,8 @@ const ChatBox = ({ chat, currentUser,setSendMessage }) => {
 
     if (chat !== null) getUserData();
   }, [chat, currentUser]);
+
+
 
   // fetch messages
   useEffect(() => {
@@ -49,7 +61,7 @@ const ChatBox = ({ chat, currentUser,setSendMessage }) => {
     setNewMessage(newMessage)
   }
 
-  const handleSend = async(e) => {
+  const handleSend = async (e) => {
     e.preventDefault();
     const message = {
       senderId: currentUser,
@@ -59,7 +71,7 @@ const ChatBox = ({ chat, currentUser,setSendMessage }) => {
 
     //send message to database
     try {
-      
+
       const { data } = await addMessage(message)
       setMessages([...messages, data])
       setNewMessage("")
@@ -68,10 +80,14 @@ const ChatBox = ({ chat, currentUser,setSendMessage }) => {
     }
 
     // send message to socket server
-const receiverId = chat.members.find((id)=>id!==currentUser)
-setSendMessage=({...message,receiverId})
+    const receiverId = chat.members.find((id) => id !== currentUser)
+    setSendMessage = ({ ...message, receiverId })
   }
 
+  //Always scroll to the last messsage
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
 
   return (
     <>
@@ -109,14 +125,12 @@ setSendMessage=({...message,receiverId})
                 }}
               />
             </div>
-            {/* chat-body */}
+            {/* chat-body  Chatbox Message*/}
             <div className="chat-body" >
               {messages.map((message) => (
-                
                 <>
-                
-                  <div
-                  
+
+                  <div ref={scroll}
                     className={
                       message.senderId === currentUser
                         ? "message own"
@@ -126,7 +140,7 @@ setSendMessage=({...message,receiverId})
                     <span>{message.text}</span>
                     <span>{format(message.createdAt)}</span>
                   </div>
-                  
+
                 </>
               ))}
             </div>
