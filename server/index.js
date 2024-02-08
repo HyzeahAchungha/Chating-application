@@ -19,7 +19,13 @@ app.use(express.static('public'))
 app.use('/images', express.static("images"))
 
 //middleware
-app.use(cors());
+app.use(cors(
+	{
+		origin:{https://chating-application-kdpx.vercel.app/auth}
+			methods:{"POST","GET","DELETE"}
+			credentials:true
+	}
+));
 app.use(express.json());
 app.use(express.urlencoded());
 dotenv.config()
